@@ -6,22 +6,16 @@ use regex::Regex;
 fn is_valid_one(min: usize, max: usize, c: char, pass: &String) -> bool {
     let cnt = pass.matches(c).count();
 
-    if cnt >= min && cnt <= max {
-        true
-    } else {
-        false
-    }
+    cnt >= min && cnt <= max
 }
 
 fn is_valid_two(a: usize, b: usize, c: char, pass: &String) -> bool {
     let mut cnt = 0;
 
-    if pass.chars().nth(a-1).unwrap() == c {
-        cnt+=1;
-    }
-
-    if pass.chars().nth(b-1).unwrap() == c {
-        cnt+=1;
+    for x in [a,b].iter() {
+        if pass.chars().nth(x-1).unwrap() == c {
+            cnt+=1;
+        }
     }
 
     cnt == 1
