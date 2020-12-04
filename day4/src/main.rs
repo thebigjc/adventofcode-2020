@@ -133,32 +133,24 @@ fn main() {
     let re: Regex = Regex::new(r"^(([^:]+):(\S+)\s*)+$").unwrap();
     let mut cnt_one = 0;
     let mut cnt_two = 0;
+    let passports : Vec<&str> = INPUT.split("\n\n").collect();
 
-    for l in INPUT.lines() {
-        if l.len() == 0 {
-            if is_valid_one(&passport) {
-                cnt_one += 1;
-            }
-            if is_valid_two(&passport) {
-                cnt_two += 1;
-            }
-            passport.clear();
-        }
 
+    for l in passports {
         for p in l.split_whitespace() {
             match re.captures(p) {
                 Some(x) => passport.insert(x.get(2).unwrap().as_str().to_string(), x.get(3).unwrap().as_str().to_string()),
                 None => None
             };
         }
-    }
-
-    if is_valid_one(&passport) {
-        cnt_one += 1;
-    }
-
-    if is_valid_two(&passport) {
-        cnt_two += 1;
+    
+        if is_valid_one(&passport) {
+            cnt_one += 1;
+        }
+        if is_valid_two(&passport) {
+            cnt_two += 1;
+        }
+        passport.clear();
     }
 
     println!("{}", cnt_one);
