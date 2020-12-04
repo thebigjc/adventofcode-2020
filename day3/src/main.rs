@@ -36,7 +36,6 @@ fn main() {
     let mut product = 1; 
     for p in paths.iter() {
         let tree_count = count_trees(&lines, p[0], p[1]);
-        println!("{}", tree_count);
         product *= tree_count;    
     }
 
