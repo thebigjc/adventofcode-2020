@@ -72,11 +72,7 @@ fn is_valid_hair_color(color : Option<&String>) -> bool {
         None => false,
         Some(x) => {
             let b : Vec<char> = x.chars().collect();
-            if b[0] != '#' {
-                return false;
-            }
-            let l = b[1..].iter().filter(|x| "1234567890abcdef".contains(**x)).count();
-            return l == 6;
+            return b.len() == 7 && b[0] == '#' && b[1..].iter().all(|&x| x.is_ascii_hexdigit())
         }
     }
 }
@@ -84,14 +80,14 @@ fn is_valid_hair_color(color : Option<&String>) -> bool {
 fn is_valid_eye_color(color : Option<&String>) -> bool {
     match color {
         None => false,
-        Some(x) => ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].iter().filter(|c| **c == x).count() == 1
+        Some(x) => ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].iter().any(|c| *c == x)
     }
 }
 
 fn is_valid_pid(pid : Option<&String>) -> bool {
     match pid {
         None => false,
-        Some(x) => x.chars().filter(|c| "0123456789".contains(*c)).count() == 9
+        Some(x) => x.len() == 9 && x.chars().all(|c| c.is_ascii_digit())
     }
 }
 
