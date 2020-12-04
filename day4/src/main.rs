@@ -51,12 +51,10 @@ fn is_valid_height(height : Option<&String>) -> bool {
                     match a {
                         Result::Err(_) => false,
                         Result::Ok(b) => {
-                            if unit == "cm" {
-                                b >= 150 && b <= 193
-                            } else if unit == "in" {
-                                b >= 59 && b <= 76
-                            } else {
-                                false
+                            match unit {
+                                "cm" => b >= 150 && b <= 193,
+                                "in" =>  b >= 59 && b <= 76,
+                                _ => false,
                             }
                         }
                     }
