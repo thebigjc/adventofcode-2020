@@ -4,8 +4,8 @@ use std::collections::HashSet;
 use std::collections::VecDeque;
 use std::iter::FromIterator;
 
-fn is_valid(x: usize, window: &VecDeque<usize>) -> bool {
-    let hs: HashSet<&usize> = HashSet::from_iter(window.iter());
+fn is_valid(x: isize, window: &VecDeque<isize>) -> bool {
+    let hs: HashSet<&isize> = HashSet::from_iter(window.iter());
     for l in hs.iter() {
         if **l > x {
             continue;
@@ -26,7 +26,7 @@ fn main() {
     let mut all_numbers = Vec::new();
     let mut part1 = 0;
 
-    for l in INPUT.lines().map(|x| x.parse::<usize>().unwrap()) {
+    for l in INPUT.lines().map(|x| x.parse::<isize>().unwrap()) {
         if part1 == 0 {
             if window.len() > WINDOW {
                 window.pop_front();
@@ -41,27 +41,23 @@ fn main() {
 
     println!("{}", part1);
 
-    for i in 0..all_numbers.len() {
-        let mut sum = all_numbers[i];
-        let mut min = sum;
-        let mut max = sum;
+    let mut sum = 0;
+    let mut lo = 0;
+    let mut hi = 0;
 
-        for j in i + 1..all_numbers.len() {
-            let n = all_numbers[j];
-            sum += n;
-
-            if n < min {
-                min = n;
-            }
-            if n > max {
-                max = n;
-            }
-            if sum == part1 {
-                println!("{}+{} = {}", min, max, min + max);
-            }
-            if sum > part1 {
-                break;
-            }
+    loop {
+        if sum < part1 {
+            sum += all_numbers[hi];
+            hi += 1;
+        } else if sum > part1 {
+            sum -= all_numbers[lo];
+            lo += 1;
+        } else {
+            let subseq = &all_numbers[lo..hi];
+            let min = subseq.iter().min().unwrap();
+            let max = subseq.iter().max().unwrap();
+            println!("{} + {} = {}", min, max, min + max);
+            break;
         }
     }
 }
