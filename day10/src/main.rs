@@ -26,15 +26,15 @@ fn main() {
 
 fn find_sub_arrangements(
     current: usize,
-    memo: &mut HashMap<Vec<usize>, usize>,
+    memo: &mut HashMap<usize, usize>,
     joltages: &[usize],
 ) -> usize {
     let mut cnt = 0;
 
     if joltages.len() == 0 {
         1
-    } else if memo.contains_key(joltages) {
-        *memo.get(joltages).unwrap()
+    } else if memo.contains_key(&joltages[0]) {
+        *memo.get(&joltages[0]).unwrap()
     } else {
         for i in 0..3 {
             if i >= joltages.len() {
@@ -45,7 +45,7 @@ fn find_sub_arrangements(
             }
         }
 
-        memo.insert(joltages.to_vec(), cnt);
+        memo.insert(joltages[0], cnt);
         cnt
     }
 }
@@ -53,7 +53,7 @@ fn find_sub_arrangements(
 fn find_arrangements(input: &str) -> usize {
     let mut joltages: Vec<usize> = input.lines().map(|x| x.parse().unwrap()).sorted().collect();
     joltages.sort();
-    let mut memo = HashMap::<Vec<usize>, usize>::new();
+    let mut memo = HashMap::<usize, usize>::new();
 
     let cnt = find_sub_arrangements(0, &mut memo, &joltages[..]);
     println!("{}", memo.len());
