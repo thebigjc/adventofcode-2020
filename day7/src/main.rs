@@ -2,7 +2,7 @@ static INPUT: &str = include_str!("../day7.txt");
 use regex::Regex;
 use petgraph::graph::{DiGraph, NodeIndex};
 use petgraph::{Incoming, Outgoing};
-//use petgraph::dot::{Dot, Config};
+
 use std::collections::HashMap;
 use std::collections::HashSet;
 use petgraph::visit::EdgeRef;
