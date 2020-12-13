@@ -14,7 +14,7 @@ fn part2(input: &str) -> i64 {
     let big_n = n.iter().fold(1, |a, b| a * b);
 
     let mut sum = 0;
-    for i in 0..a.len() {
+    for i in 1..a.len() {
         let big_n_i = big_n / n[i];
         let big_m_i = modinverse(big_n_i, n[i]).unwrap();
         sum += a[i] * big_m_i * big_n_i;
